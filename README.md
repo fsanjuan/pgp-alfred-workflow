@@ -24,17 +24,34 @@ From the project directory, run:
 bash build.sh
 ```
 
-This creates `PGP Encrypt Decrypt.alfredworkflow` in the same folder.
+This creates `alfred-pgp.alfredworkflow` in the same folder.
 
 ### 2. Install into Alfred
 
-Double-click `PGP Encrypt Decrypt.alfredworkflow` in Finder, or run:
+Double-click `alfred-pgp.alfredworkflow` in Finder, or run:
 
 ```bash
-open "PGP Encrypt Decrypt.alfredworkflow"
+open alfred-pgp.alfredworkflow
 ```
 
 Alfred will prompt you to import the workflow. Click **Import**.
+
+---
+
+## Running the tests
+
+**Requirements:** `node` and `bats-core` — install with `brew install node bats-core`, then `npm install` once.
+
+```bash
+# JS unit tests (parseKeys / buildItems logic)
+npm test
+
+# Shell script tests (encrypt.sh / decrypt.sh)
+bats tests/encrypt.bats tests/decrypt.bats
+
+# Plist validation (also runs automatically in build.sh)
+plutil -lint src/info.plist
+```
 
 ---
 
@@ -103,7 +120,7 @@ GPG will ask for your passphrase via the pinentry dialog (handled automatically 
 ```
 File Action "Encrypt with PGP"
     ↓  passes file path
-Script Filter (list_keys.py)
+Script Filter (list_keys.js)
     ↓  queries gpg --list-keys, user picks a recipient
     ↓  file path is preserved via Alfred workflow variables
 Run Script (encrypt.sh)
@@ -126,9 +143,9 @@ Post Notification
 
 ### Key picker (Script Filter)
 
-`list_keys.py` parses `gpg --list-keys --with-colons` and builds an Alfred result list. Revoked, expired, and disabled keys are automatically excluded. The list is filterable by name or email as you type.
+`list_keys.js` parses `gpg --list-keys --with-colons` and builds an Alfred result list. Revoked, expired, and disabled keys are automatically excluded. The list is filterable by name or email as you type.
 
-The file path is threaded through the encrypt flow using Alfred's [workflow variables](https://www.alfredapp.com/help/workflows/advanced/variables/) mechanism: `list_keys.py` embeds the path in its JSON response, and Alfred makes it available as a `$filepath` environment variable to subsequent scripts.
+The file path is threaded through the encrypt flow using Alfred's [workflow variables](https://www.alfredapp.com/help/workflows/advanced/variables/) mechanism: `list_keys.js` embeds the path in its JSON response, and Alfred makes it available as a `$filepath` environment variable to subsequent scripts.
 
 ---
 
