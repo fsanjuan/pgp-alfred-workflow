@@ -43,7 +43,10 @@ if gpg --batch --yes \
 else
     error=$(cat "$error_log")
     rm -f "$error_log"
-    # Trim the error message to something notification-friendly
-    short_error=$(echo "$error" | tail -1)
-    echo "Encryption failed: $short_error"
+    if echo "$error" | grep -q "Unusable public key"; then
+        echo "Key not trusted. Run in Terminal: gpg --edit-key $recipient → trust → 5 → quit"
+    else
+        short_error=$(echo "$error" | tail -1)
+        echo "Encryption failed: $short_error"
+    fi
 fi

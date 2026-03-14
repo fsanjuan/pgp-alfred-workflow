@@ -4,9 +4,7 @@
 <dict>
 	<key>bundleid</key>
 	<string>com.felix.pgp-encrypt-decrypt</string>
-	<key>category</key>
-	<string>Productivity</string>
-	<key>connections</key>
+<key>connections</key>
 	<dict>
 		<key>E1F2A3B4-C5D6-7890-E1F2-A3B4C5D67890</key>
 		<array>
@@ -85,27 +83,19 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>allowmultipleselections</key>
-				<false/>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string></string>
-				<key>script</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Choose a recipient and encrypt this file</string>
-				<key>title</key>
-				<string>Encrypt with PGP</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>useescaping</key>
+				<key>acceptsfiles</key>
 				<true/>
+				<key>acceptsmulti</key>
+				<false/>
+				<key>acceptstext</key>
+				<false/>
+				<key>acceptsurls</key>
+				<false/>
+				<key>name</key>
+				<string>Encrypt with PGP</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.trigger.fileaction</string>
+			<string>alfred.workflow.trigger.universalaction</string>
 			<key>uid</key>
 			<string>E1F2A3B4-C5D6-7890-E1F2-A3B4C5D67890</string>
 			<key>version</key>
@@ -207,27 +197,19 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>allowmultipleselections</key>
-				<false/>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string></string>
-				<key>script</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Decrypt this PGP/GPG encrypted file</string>
-				<key>title</key>
-				<string>Decrypt with PGP</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>useescaping</key>
+				<key>acceptsfiles</key>
 				<true/>
+				<key>acceptsmulti</key>
+				<false/>
+				<key>acceptstext</key>
+				<false/>
+				<key>acceptsurls</key>
+				<false/>
+				<key>name</key>
+				<string>Decrypt with PGP</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.trigger.fileaction</string>
+			<string>alfred.workflow.trigger.universalaction</string>
 			<key>uid</key>
 			<string>C5D6E7F8-A9B0-1234-C5D6-E7F8A9B01234</string>
 			<key>version</key>
