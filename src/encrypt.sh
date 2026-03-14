@@ -6,9 +6,17 @@
 #
 # Alfred env vars:
 #   $filepath: path to the file to encrypt (set by Script Filter JSON variables)
+#
+# Debug mode: touch /tmp/alfred-pgp-debug to enable logging to /tmp/alfred-pgp-debug.log
 
 # Ensure common GPG install locations are in PATH
 export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
+
+debug() { [[ -f /tmp/alfred-pgp-debug ]] && echo "$*" >> /tmp/alfred-pgp-debug.log; }
+
+debug "--- $(date) ---"
+debug "argv[1]: $1"
+debug "filepath: ${filepath:-<unset>}"
 
 recipient="$1"
 input="${filepath:-}"
@@ -39,12 +47,15 @@ if gpg --batch --yes \
        --output "$output" \
        "$input" 2>"$error_log"; then
     rm -f "$error_log"
+    debug "gpg succeeded"
     echo "Encrypted: $(basename "$output")"
 else
     error=$(cat "$error_log")
     rm -f "$error_log"
+    debug "gpg failed: $error"
     if echo "$error" | grep -q "Unusable public key"; then
-        echo "Key not trusted. Run in Terminal: gpg --edit-key $recipient → trust → 5 → quit"
+        printf 'gpg --edit-key %s' "$recipient" | pbcopy
+        echo "Key not trusted — trust command copied to clipboard. Paste and run it in Terminal."
     else
         short_error=$(echo "$error" | tail -1)
         echo "Encryption failed: $short_error"
