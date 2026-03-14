@@ -13,6 +13,8 @@
 export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
 
 debug() { [[ -f /tmp/alfred-pgp-debug ]] && echo "$*" >> /tmp/alfred-pgp-debug.log; }
+notify() { osascript -e "display notification \"$1\" with title \"PGP Encrypt/Decrypt\""; }
+error_dialog() { osascript -e "display dialog \"$1\" with title \"PGP Encrypt/Decrypt\" buttons {\"OK\"} default button \"OK\" with icon caution"; }
 
 debug "--- $(date) ---"
 debug "argv[1]: $1"
@@ -23,17 +25,17 @@ input="${filepath:-}"
 
 # Validate inputs
 if [[ -z "$input" ]]; then
-    echo "Error: file path not provided (filepath variable not set)"
+    error_dialog "Error: file path not provided."
     exit 0
 fi
 
 if [[ ! -f "$input" ]]; then
-    echo "Error: file not found: $input"
+    error_dialog "Error: file not found:\n$input"
     exit 0
 fi
 
 if [[ -z "$recipient" ]]; then
-    echo "Error: no recipient key selected"
+    error_dialog "Error: no recipient key selected."
     exit 0
 fi
 
@@ -48,16 +50,16 @@ if gpg --batch --yes \
        "$input" 2>"$error_log"; then
     rm -f "$error_log"
     debug "gpg succeeded"
-    echo "Encrypted: $(basename "$output")"
+    notify "Encrypted: $(basename "$output")"
 else
     error=$(cat "$error_log")
     rm -f "$error_log"
     debug "gpg failed: $error"
     if echo "$error" | grep -q "Unusable public key"; then
         printf 'gpg --edit-key %s' "$recipient" | pbcopy
-        echo "Key not trusted — trust command copied to clipboard. Paste and run it in Terminal."
+        error_dialog "This key is not trusted by GPG.\n\nThe trust command has been copied to your clipboard:\n\ngpg --edit-key $recipient\n\nPaste and run it in Terminal, then type: trust → 5 → quit"
     else
         short_error=$(echo "$error" | tail -1)
-        echo "Encryption failed: $short_error"
+        error_dialog "Encryption failed:\n$short_error"
     fi
 fi

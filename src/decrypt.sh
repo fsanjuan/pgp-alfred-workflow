@@ -5,20 +5,29 @@
 #   $1: path to the encrypted file (.gpg or .pgp)
 #
 # GPG will invoke pinentry (via gpg-agent) for the passphrase if needed.
+#
+# Debug mode: touch /tmp/alfred-pgp-debug to enable logging to /tmp/alfred-pgp-debug.log
 
 # Ensure common GPG install locations are in PATH
 export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
+
+debug() { [[ -f /tmp/alfred-pgp-debug ]] && echo "$*" >> /tmp/alfred-pgp-debug.log; }
+notify() { osascript -e "display notification \"$1\" with title \"PGP Decrypt/Decrypt\""; }
+error_dialog() { osascript -e "display dialog \"$1\" with title \"PGP Encrypt/Decrypt\" buttons {\"OK\"} default button \"OK\" with icon caution"; }
+
+debug "--- $(date) ---"
+debug "argv[1]: $1"
 
 input="$1"
 
 # Validate input
 if [[ -z "$input" ]]; then
-    echo "Error: no file path provided"
+    error_dialog "Error: no file path provided."
     exit 0
 fi
 
 if [[ ! -f "$input" ]]; then
-    echo "Error: file not found: $input"
+    error_dialog "Error: file not found:\n$input"
     exit 0
 fi
 
@@ -46,10 +55,12 @@ if gpg --batch --yes \
        --output "$output" \
        "$input" 2>"$error_log"; then
     rm -f "$error_log"
-    echo "Decrypted: $(basename "$output")"
+    debug "gpg succeeded"
+    notify "Decrypted: $(basename "$output")"
 else
     error=$(cat "$error_log")
     rm -f "$error_log"
+    debug "gpg failed: $error"
     short_error=$(echo "$error" | tail -1)
-    echo "Decryption failed: $short_error"
+    error_dialog "Decryption failed:\n$short_error"
 fi
