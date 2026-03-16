@@ -12,7 +12,7 @@
 export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
 
 debug() { [[ -f /tmp/alfred-pgp-debug ]] && echo "$*" >> /tmp/alfred-pgp-debug.log; }
-notify() { osascript -e "display notification \"$1\" with title \"PGP Decrypt/Decrypt\""; }
+notify() { osascript -e "display notification \"$1\" with title \"PGP Encrypt/Decrypt\""; }
 error_dialog() { osascript -e "display dialog \"$1\" with title \"PGP Encrypt/Decrypt\" buttons {\"OK\"} default button \"OK\" with icon caution"; }
 
 debug "--- $(date) ---"
@@ -38,14 +38,12 @@ else
     output="${input}.decrypted"
 fi
 
-# Avoid overwriting an existing file — append a counter if needed
+# If output already exists, ask the user before overwriting
 if [[ -f "$output" ]]; then
-    base="$output"
-    counter=1
-    while [[ -f "$output" ]]; do
-        output="${base}.${counter}"
-        ((counter++))
-    done
+    response=$(osascript -e "display dialog \"$(basename "$output") already exists.\n\nDo you want to overwrite it?\" with title \"PGP Encrypt/Decrypt\" buttons {\"Cancel\", \"Overwrite\"} default button \"Cancel\" with icon caution")
+    if [[ "$response" != *"Overwrite"* ]]; then
+        exit 0
+    fi
 fi
 
 # Run decryption, capturing stderr for error reporting

@@ -41,6 +41,14 @@ fi
 
 output="${input}.gpg"
 
+# If output already exists, ask the user before overwriting
+if [[ -f "$output" ]]; then
+    response=$(osascript -e "display dialog \"$(basename "$output") already exists.\n\nDo you want to overwrite it?\" with title \"PGP Encrypt/Decrypt\" buttons {\"Cancel\", \"Overwrite\"} default button \"Cancel\" with icon caution")
+    if [[ "$response" != *"Overwrite"* ]]; then
+        exit 0
+    fi
+fi
+
 # Run encryption, capturing stderr for error reporting
 error_log=$(mktemp)
 if gpg --batch --yes \
