@@ -4,6 +4,9 @@
 # Built workflow package
 *.alfredworkflow
 
+# Generated build artifacts
+src/icon.png
+
 # macOS
 .DS_Store
 

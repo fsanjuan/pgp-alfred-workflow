@@ -11,6 +11,9 @@ OUTPUT="alfred-pgp.alfredworkflow"
 # Validate plist before doing anything else
 plutil -lint src/info.plist
 
+# Resize icon from assets into src (build artifact, not committed)
+sips -z 256 256 assets/icon-original.png --out src/icon.png > /dev/null
+
 # Make scripts executable
 chmod +x src/encrypt.sh src/decrypt.sh src/list_keys.js
 
