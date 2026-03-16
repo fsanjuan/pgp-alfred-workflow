@@ -62,6 +62,11 @@ if [[ -z "$recipient" ]]; then
     exit 0
 fi
 
+if [[ ! "$recipient" =~ ^[0-9A-Fa-f]{40}$ ]]; then
+    error_dialog "Error: invalid key fingerprint."
+    exit 0
+fi
+
 output="${input}.gpg"
 
 # If output already exists, ask the user before overwriting

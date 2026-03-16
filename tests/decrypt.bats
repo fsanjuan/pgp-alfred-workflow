@@ -1,11 +1,20 @@
 #!/usr/bin/env bats
 # Tests for src/decrypt.sh
 #
-# gpg is mocked via exported bash functions — functions take precedence over
-# PATH binaries, so the scripts never need a real GPG installation.
+# gpg and osascript are mocked via exported bash functions.
 
 setup() {
     TEST_DIR="$(mktemp -d)"
+
+    # Mock osascript: echo the message argument and drain the heredoc from stdin
+    osascript() {
+        if [[ "$1" == "-" ]]; then
+            local msg="$2"
+            cat > /dev/null
+            echo "$msg"
+        fi
+    }
+    export -f osascript
 }
 
 teardown() {
@@ -87,31 +96,42 @@ mock_gpg_success() {
 }
 
 # ---------------------------------------------------------------------------
-# Collision avoidance
+# Overwrite prompt
 # ---------------------------------------------------------------------------
 
-@test "appends .1 counter when output file already exists" {
+@test "decrypts and overwrites when user confirms" {
     local encrypted="$TEST_DIR/report.txt.gpg"
     touch "$encrypted"
-    touch "$TEST_DIR/report.txt"       # pre-existing output
+    echo "old content" > "$TEST_DIR/report.txt"
+
+    # Distinguish confirm dialog from notify: notify messages start with "Decrypted:"
+    osascript() {
+        if [[ "$1" == "-" ]]; then
+            local msg="$2"; cat > /dev/null
+            [[ "$msg" == Decrypted:* ]] && echo "$msg" || echo "Overwrite"
+        fi
+    }
+    export -f osascript
     mock_gpg_success
 
     run bash src/decrypt.sh "$encrypted"
     [ "$status" -eq 0 ]
-    [[ "$output" == "Decrypted: report.txt.1" ]]
+    [[ "$output" == "Decrypted: report.txt" ]]
 }
 
-@test "increments counter until a free name is found" {
+@test "exits without decrypting when user cancels overwrite" {
     local encrypted="$TEST_DIR/report.txt.gpg"
     touch "$encrypted"
-    touch "$TEST_DIR/report.txt"
-    touch "$TEST_DIR/report.txt.1"
-    touch "$TEST_DIR/report.txt.2"
-    mock_gpg_success
+    echo "old content" > "$TEST_DIR/report.txt"
+
+    # Simulate user clicking Cancel
+    osascript() { cat > /dev/null; echo "Cancel"; }
+    export -f osascript
 
     run bash src/decrypt.sh "$encrypted"
     [ "$status" -eq 0 ]
-    [[ "$output" == "Decrypted: report.txt.3" ]]
+    # Original file unchanged, no new file created
+    [[ "$(cat "$TEST_DIR/report.txt")" == "old content" ]]
 }
 
 # ---------------------------------------------------------------------------
@@ -130,7 +150,7 @@ mock_gpg_success() {
 
     run bash src/decrypt.sh "$encrypted"
     [ "$status" -eq 0 ]
-    [[ "$output" == "Decryption failed:"* ]]
+    [[ "$output" == *"Decryption failed:"* ]]
 }
 
 @test "failure message includes last line of gpg stderr" {

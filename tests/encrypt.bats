@@ -1,13 +1,24 @@
 #!/usr/bin/env bats
 # Tests for src/encrypt.sh
 #
-# gpg is mocked via exported bash functions — functions take precedence over
-# PATH binaries, so the scripts never need a real GPG installation.
+# gpg and osascript are mocked via exported bash functions.
+
+VALID_FPR="ABCD1234ABCD1234ABCD1234ABCD1234ABCD1234"
 
 setup() {
     TEST_DIR="$(mktemp -d)"
     TEST_FILE="$TEST_DIR/document.txt"
     echo "secret contents" > "$TEST_FILE"
+
+    # Mock osascript: echo the message argument and drain the heredoc from stdin
+    osascript() {
+        if [[ "$1" == "-" ]]; then
+            local msg="$2"
+            cat > /dev/null
+            echo "$msg"
+        fi
+    }
+    export -f osascript
 }
 
 teardown() {
@@ -20,14 +31,14 @@ teardown() {
 
 @test "error when filepath env var is not set" {
     unset filepath
-    run bash src/encrypt.sh "RECIPIENT_FINGERPRINT"
+    run bash src/encrypt.sh "$VALID_FPR"
     [ "$status" -eq 0 ]
     [[ "$output" == *"Error: file path not provided"* ]]
 }
 
 @test "error when filepath is set but file does not exist" {
     export filepath="/nonexistent/file.txt"
-    run bash src/encrypt.sh "RECIPIENT_FINGERPRINT"
+    run bash src/encrypt.sh "$VALID_FPR"
     [ "$status" -eq 0 ]
     [[ "$output" == *"Error: file not found"* ]]
 }
@@ -46,6 +57,20 @@ teardown() {
     [[ "$output" == *"Error: no recipient key selected"* ]]
 }
 
+@test "error when recipient fingerprint format is invalid" {
+    export filepath="$TEST_FILE"
+    run bash src/encrypt.sh "NOT_A_VALID_FINGERPRINT"
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"invalid key fingerprint"* ]]
+}
+
+@test "error when fingerprint is valid hex but wrong length" {
+    export filepath="$TEST_FILE"
+    run bash src/encrypt.sh "ABCD1234"
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"invalid key fingerprint"* ]]
+}
+
 # ---------------------------------------------------------------------------
 # Successful encryption
 # ---------------------------------------------------------------------------
@@ -53,7 +78,6 @@ teardown() {
 @test "prints Encrypted message on success" {
     export filepath="$TEST_FILE"
 
-    # Mock gpg: parse --output arg and create the file, then exit 0
     gpg() {
         local args=("$@")
         for i in "${!args[@]}"; do
@@ -65,7 +89,7 @@ teardown() {
     }
     export -f gpg
 
-    run bash src/encrypt.sh "RECIPIENT_FINGERPRINT"
+    run bash src/encrypt.sh "$VALID_FPR"
     [ "$status" -eq 0 ]
     [[ "$output" == "Encrypted: document.txt.gpg" ]]
 }
@@ -84,7 +108,7 @@ teardown() {
     }
     export -f gpg
 
-    run bash src/encrypt.sh "RECIPIENT_FINGERPRINT"
+    run bash src/encrypt.sh "$VALID_FPR"
     [ -f "${TEST_FILE}.gpg" ]
 }
 
@@ -94,7 +118,6 @@ teardown() {
 
     gpg() {
         echo "$*" > "$CAPTURED_ARGS_FILE"
-        # Create output file so script considers it a success
         local args=("$@")
         for i in "${!args[@]}"; do
             if [[ "${args[$i]}" == "--output" ]]; then
@@ -106,11 +129,11 @@ teardown() {
     export -f gpg
     export CAPTURED_ARGS_FILE
 
-    run bash src/encrypt.sh "MY_FINGERPRINT"
+    run bash src/encrypt.sh "$VALID_FPR"
     [ "$status" -eq 0 ]
     grep -q "\-\-encrypt" "$CAPTURED_ARGS_FILE"
     grep -q "\-\-recipient" "$CAPTURED_ARGS_FILE"
-    grep -q "MY_FINGERPRINT" "$CAPTURED_ARGS_FILE"
+    grep -q "$VALID_FPR" "$CAPTURED_ARGS_FILE"
 }
 
 # ---------------------------------------------------------------------------
@@ -121,14 +144,14 @@ teardown() {
     export filepath="$TEST_FILE"
 
     gpg() {
-        echo "gpg: RECIPIENT_FINGERPRINT: No public key" >&2
+        echo "gpg: key not found" >&2
         return 1
     }
     export -f gpg
 
-    run bash src/encrypt.sh "RECIPIENT_FINGERPRINT"
+    run bash src/encrypt.sh "$VALID_FPR"
     [ "$status" -eq 0 ]
-    [[ "$output" == "Encryption failed:"* ]]
+    [[ "$output" == *"Encryption failed:"* ]]
 }
 
 @test "failure message includes last line of gpg stderr" {
@@ -140,6 +163,6 @@ teardown() {
     }
     export -f gpg
 
-    run bash src/encrypt.sh "RECIPIENT_FINGERPRINT"
+    run bash src/encrypt.sh "$VALID_FPR"
     [[ "$output" == *"key not found"* ]]
 }
