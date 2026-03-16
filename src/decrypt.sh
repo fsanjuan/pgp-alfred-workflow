@@ -12,8 +12,31 @@
 export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
 
 debug() { [[ -f /tmp/alfred-pgp-debug ]] && echo "$*" >> /tmp/alfred-pgp-debug.log; }
-notify() { osascript -e "display notification \"$1\" with title \"PGP Encrypt/Decrypt\""; }
-error_dialog() { osascript -e "display dialog \"$1\" with title \"PGP Encrypt/Decrypt\" buttons {\"OK\"} default button \"OK\" with icon caution"; }
+
+notify() {
+    osascript - "$1" <<'EOF'
+on run argv
+    display notification (item 1 of argv) with title "PGP Encrypt/Decrypt"
+end run
+EOF
+}
+
+error_dialog() {
+    osascript - "$1" <<'EOF'
+on run argv
+    display dialog (item 1 of argv) with title "PGP Encrypt/Decrypt" buttons {"OK"} default button "OK" with icon caution
+end run
+EOF
+}
+
+confirm_overwrite() {
+    osascript - "$1" <<'EOF'
+on run argv
+    set response to display dialog ((item 1 of argv) & " already exists." & return & return & "Do you want to overwrite it?") with title "PGP Encrypt/Decrypt" buttons {"Cancel", "Overwrite"} default button "Cancel" with icon caution
+    return button returned of response
+end run
+EOF
+}
 
 debug "--- $(date) ---"
 debug "argv[1]: $1"
@@ -27,7 +50,7 @@ if [[ -z "$input" ]]; then
 fi
 
 if [[ ! -f "$input" ]]; then
-    error_dialog "Error: file not found:\n$input"
+    error_dialog "Error: file not found: $input"
     exit 0
 fi
 
@@ -40,8 +63,8 @@ fi
 
 # If output already exists, ask the user before overwriting
 if [[ -f "$output" ]]; then
-    response=$(osascript -e "display dialog \"$(basename "$output") already exists.\n\nDo you want to overwrite it?\" with title \"PGP Encrypt/Decrypt\" buttons {\"Cancel\", \"Overwrite\"} default button \"Cancel\" with icon caution")
-    if [[ "$response" != *"Overwrite"* ]]; then
+    response=$(confirm_overwrite "$(basename "$output")")
+    if [[ "$response" != "Overwrite" ]]; then
         exit 0
     fi
 fi
@@ -60,5 +83,5 @@ else
     rm -f "$error_log"
     debug "gpg failed: $error"
     short_error=$(echo "$error" | tail -1)
-    error_dialog "Decryption failed:\n$short_error"
+    error_dialog "Decryption failed: $short_error"
 fi

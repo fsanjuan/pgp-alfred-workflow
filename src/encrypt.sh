@@ -13,8 +13,31 @@
 export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
 
 debug() { [[ -f /tmp/alfred-pgp-debug ]] && echo "$*" >> /tmp/alfred-pgp-debug.log; }
-notify() { osascript -e "display notification \"$1\" with title \"PGP Encrypt/Decrypt\""; }
-error_dialog() { osascript -e "display dialog \"$1\" with title \"PGP Encrypt/Decrypt\" buttons {\"OK\"} default button \"OK\" with icon caution"; }
+
+notify() {
+    osascript - "$1" <<'EOF'
+on run argv
+    display notification (item 1 of argv) with title "PGP Encrypt/Decrypt"
+end run
+EOF
+}
+
+error_dialog() {
+    osascript - "$1" <<'EOF'
+on run argv
+    display dialog (item 1 of argv) with title "PGP Encrypt/Decrypt" buttons {"OK"} default button "OK" with icon caution
+end run
+EOF
+}
+
+confirm_overwrite() {
+    osascript - "$1" <<'EOF'
+on run argv
+    set response to display dialog ((item 1 of argv) & " already exists." & return & return & "Do you want to overwrite it?") with title "PGP Encrypt/Decrypt" buttons {"Cancel", "Overwrite"} default button "Cancel" with icon caution
+    return button returned of response
+end run
+EOF
+}
 
 debug "--- $(date) ---"
 debug "argv[1]: $1"
@@ -30,7 +53,7 @@ if [[ -z "$input" ]]; then
 fi
 
 if [[ ! -f "$input" ]]; then
-    error_dialog "Error: file not found:\n$input"
+    error_dialog "Error: file not found: $input"
     exit 0
 fi
 
@@ -43,8 +66,8 @@ output="${input}.gpg"
 
 # If output already exists, ask the user before overwriting
 if [[ -f "$output" ]]; then
-    response=$(osascript -e "display dialog \"$(basename "$output") already exists.\n\nDo you want to overwrite it?\" with title \"PGP Encrypt/Decrypt\" buttons {\"Cancel\", \"Overwrite\"} default button \"Cancel\" with icon caution")
-    if [[ "$response" != *"Overwrite"* ]]; then
+    response=$(confirm_overwrite "$(basename "$output")")
+    if [[ "$response" != "Overwrite" ]]; then
         exit 0
     fi
 fi
@@ -65,9 +88,15 @@ else
     debug "gpg failed: $error"
     if echo "$error" | grep -q "Unusable public key"; then
         printf 'gpg --edit-key %s' "$recipient" | pbcopy
-        error_dialog "This key is not trusted by GPG.\n\nThe trust command has been copied to your clipboard:\n\ngpg --edit-key $recipient\n\nPaste and run it in Terminal, then type: trust → 5 → quit"
+        error_dialog "This key is not trusted by GPG.
+
+The trust command has been copied to your clipboard:
+
+gpg --edit-key $recipient
+
+Paste and run it in Terminal, then type: trust → 5 → quit"
     else
         short_error=$(echo "$error" | tail -1)
-        error_dialog "Encryption failed:\n$short_error"
+        error_dialog "Encryption failed: $short_error"
     fi
 fi
