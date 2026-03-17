@@ -1,5 +1,7 @@
 # PGP Encrypt/Decrypt — Alfred Workflow
 
+![CI](https://github.com/fsanjuan/pgp-alfred-workflow/actions/workflows/ci.yml/badge.svg)
+
 An Alfred workflow to encrypt and decrypt files using PGP/GPG, directly from Alfred's Universal Actions (file browser or Finder selection).
 
 ---
