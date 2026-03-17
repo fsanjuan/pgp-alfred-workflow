@@ -6,7 +6,7 @@ An Alfred workflow to encrypt and decrypt files using PGP/GPG, directly from Alf
 
 ## Requirements
 
-- **macOS** with [Alfred](https://www.alfredapp.com/) 4 or 5 and a **Powerpack** licence (required for File/Universal Actions and workflows)
+- **macOS** with [Alfred](https://www.alfredapp.com/) 5 and a **Powerpack** licence (required for Universal Actions and workflows)
 - **GPG** installed — choose one:
   - [GPG Suite](https://gpgtools.org) *(recommended)*: installs `gpg`, a keychain-integrated passphrase manager, and a macOS-native pinentry dialog
   - Homebrew: `brew install gnupg`
