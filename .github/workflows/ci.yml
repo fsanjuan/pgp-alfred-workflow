@@ -9,3 +9,6 @@ on:
 jobs:
   test:
     uses: ./.github/workflows/_test.yml
+    permissions:
+      checks: write
+      contents: read
