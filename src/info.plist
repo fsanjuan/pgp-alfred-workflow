@@ -6,11 +6,11 @@
 	<string>com.felix.pgp-encrypt-decrypt</string>
 <key>connections</key>
 	<dict>
-		<key>E1F2A3B4-C5D6-7890-E1F2-A3B4C5D67890</key>
+		<key>BF4A6361-0210-482C-8602-142A1AF204C9</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>F2A3B4C5-D6E7-8901-F2A3-B4C5D6E78901</string>
+				<string>0FF3AAEA-13A8-469C-A573-D631D514B69C</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -19,11 +19,11 @@
 				<false/>
 			</dict>
 		</array>
-		<key>F2A3B4C5-D6E7-8901-F2A3-B4C5D6E78901</key>
+		<key>0FF3AAEA-13A8-469C-A573-D631D514B69C</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>A3B4C5D6-E7F8-9012-A3B4-C5D6E7F89012</string>
+				<string>B2F05990-4743-427B-AC0D-CFE8273A49B4</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -33,11 +33,11 @@
 			</dict>
 		</array>
 
-		<key>C5D6E7F8-A9B0-1234-C5D6-E7F8A9B01234</key>
+		<key>9FA4F317-2582-4930-9634-28F94A2C9743</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>D6E7F8A9-B0C1-2345-D6E7-F8A9B0C12345</string>
+				<string>4F30ECBA-4CA0-4CC5-A83C-05764A58D2E8</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -73,7 +73,7 @@
 			<key>type</key>
 			<string>alfred.workflow.trigger.universalaction</string>
 			<key>uid</key>
-			<string>E1F2A3B4-C5D6-7890-E1F2-A3B4C5D67890</string>
+			<string>BF4A6361-0210-482C-8602-142A1AF204C9</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -122,7 +122,7 @@
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>F2A3B4C5-D6E7-8901-F2A3-B4C5D6E78901</string>
+			<string>0FF3AAEA-13A8-469C-A573-D631D514B69C</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -145,7 +145,7 @@
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>A3B4C5D6-E7F8-9012-A3B4-C5D6E7F89012</string>
+			<string>B2F05990-4743-427B-AC0D-CFE8273A49B4</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -167,7 +167,7 @@
 			<key>type</key>
 			<string>alfred.workflow.trigger.universalaction</string>
 			<key>uid</key>
-			<string>C5D6E7F8-A9B0-1234-C5D6-E7F8A9B01234</string>
+			<string>9FA4F317-2582-4930-9634-28F94A2C9743</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -190,7 +190,7 @@
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>D6E7F8A9-B0C1-2345-D6E7-F8A9B0C12345</string>
+			<string>4F30ECBA-4CA0-4CC5-A83C-05764A58D2E8</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -211,21 +211,21 @@ Output files are placed next to the originals.
 	</string>
 	<key>uidata</key>
 	<dict>
-		<key>E1F2A3B4-C5D6-7890-E1F2-A3B4C5D67890</key>
+		<key>BF4A6361-0210-482C-8602-142A1AF204C9</key>
 		<dict>
 			<key>xpos</key>
 			<real>10</real>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
-		<key>F2A3B4C5-D6E7-8901-F2A3-B4C5D6E78901</key>
+		<key>0FF3AAEA-13A8-469C-A573-D631D514B69C</key>
 		<dict>
 			<key>xpos</key>
 			<real>220</real>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
-		<key>A3B4C5D6-E7F8-9012-A3B4-C5D6E7F89012</key>
+		<key>B2F05990-4743-427B-AC0D-CFE8273A49B4</key>
 		<dict>
 			<key>xpos</key>
 			<real>430</real>
@@ -233,14 +233,14 @@ Output files are placed next to the originals.
 			<real>10</real>
 		</dict>
 
-		<key>C5D6E7F8-A9B0-1234-C5D6-E7F8A9B01234</key>
+		<key>9FA4F317-2582-4930-9634-28F94A2C9743</key>
 		<dict>
 			<key>xpos</key>
 			<real>10</real>
 			<key>ypos</key>
 			<real>160</real>
 		</dict>
-		<key>D6E7F8A9-B0C1-2345-D6E7-F8A9B0C12345</key>
+		<key>4F30ECBA-4CA0-4CC5-A83C-05764A58D2E8</key>
 		<dict>
 			<key>xpos</key>
 			<real>220</real>
