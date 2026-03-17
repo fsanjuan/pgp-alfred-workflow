@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>com.felix.pgp-encrypt-decrypt</string>
+	<string>com.github.fsanjuan.pgp-workflow</string>
 <key>connections</key>
 	<dict>
 		<key>BF4A6361-0210-482C-8602-142A1AF204C9</key>
