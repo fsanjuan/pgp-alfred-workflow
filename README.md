@@ -95,7 +95,7 @@ Follow the prompts. Choose RSA 4096-bit or Ed25519 for best security.
 
 ### Encrypting a file
 
-1. Open Alfred and navigate to the file, **or** use Alfred's Universal Action on a file selected in Finder (`⌘ Space` then type the filename, or trigger Alfred's file action via your configured hotkey).
+1. Open Alfred and navigate to the file, **or** select a file in Finder and trigger Universal Actions via your configured hotkey.
 2. Press `→` (or `Tab`) to open Universal Actions.
 3. Select **Encrypt with PGP**.
 4. A list of your GPG public keys appears. Type to filter by name or email.
@@ -153,6 +153,7 @@ The file path is threaded through the encrypt flow using Alfred's [workflow vari
 |------|---------|
 | `info.plist` | Alfred workflow definition (nodes, connections, layout) |
 | `list_keys.js` | Script Filter: reads GPG keyring, outputs Alfred JSON (JXA) |
+| `keys.js` | Pure JS logic extracted from `list_keys.js` for unit testing |
 | `encrypt.sh` | Runs `gpg --encrypt` for the selected recipient |
 | `decrypt.sh` | Runs `gpg --decrypt` and handles output file naming |
 | `build.sh` | Packages the workflow into a `.alfredworkflow` file |
@@ -195,7 +196,7 @@ pinentry-program /usr/local/bin/pinentry-mac
 
 **Alfred doesn't show the file actions**
 
-Make sure you have an Alfred Powerpack licence. Universal Actions require Alfred 4+ with Powerpack.
+Make sure you have an Alfred Powerpack licence. Universal Actions require Alfred 5 with Powerpack.
 
 ---
 
