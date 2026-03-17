@@ -7,12 +7,12 @@
 # Alfred env vars:
 #   $filepath: path to the file to encrypt (set by Script Filter JSON variables)
 #
-# Debug mode: touch /tmp/alfred-pgp-debug to enable logging to /tmp/alfred-pgp-debug.log
+# Debug mode: touch ~/.config/alfred-pgp/debug to enable logging to ~/.config/alfred-pgp/debug.log
 
 # Ensure common GPG install locations are in PATH
 export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
 
-debug() { [[ -f /tmp/alfred-pgp-debug ]] && echo "$*" >> /tmp/alfred-pgp-debug.log; }
+debug() { [[ -f "${HOME}/.config/alfred-pgp/debug" ]] && echo "$*" >> "${HOME}/.config/alfred-pgp/debug.log"; }
 
 notify() {
     osascript - "$1" <<'EOF'
