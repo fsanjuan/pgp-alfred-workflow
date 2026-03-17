@@ -92,14 +92,24 @@ else
     rm -f "$error_log"
     debug "gpg failed: $error"
     if echo "$error" | grep -q "Unusable public key"; then
-        printf 'gpg --edit-key %s' "$recipient" | pbcopy
-        error_dialog "This key is not trusted by GPG.
+        local trust_cmd="gpg --edit-key $recipient"
+        if printf '%s' "$trust_cmd" | pbcopy 2>/dev/null; then
+            error_dialog "This key is not trusted by GPG.
 
 The trust command has been copied to your clipboard:
 
-gpg --edit-key $recipient
+$trust_cmd
 
 Paste and run it in Terminal, then type: trust → 5 → quit"
+        else
+            error_dialog "This key is not trusted by GPG.
+
+Run this command in Terminal, then try again:
+
+$trust_cmd
+
+Then type: trust → 5 → quit"
+        fi
     else
         short_error=$(echo "$error" | tail -1)
         error_dialog "Encryption failed: $short_error"
