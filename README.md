@@ -101,7 +101,7 @@ Follow the prompts. Choose RSA 4096-bit or Ed25519 for best security.
 4. A list of your GPG public keys appears. Type to filter by name or email.
 5. Select the recipient and press `↵`.
 
-The encrypted file is saved next to the original with a `.gpg` extension (e.g. `document.pdf` → `document.pdf.gpg`). A notification confirms success or reports an error.
+The encrypted file is saved next to the original with a `.gpg` extension (e.g. `document.pdf` → `document.pdf.gpg`). A notification confirms success. If the output file already exists, you'll be asked whether to overwrite it.
 
 ### Decrypting a file
 
@@ -109,7 +109,7 @@ The encrypted file is saved next to the original with a `.gpg` extension (e.g. `
 2. Press `→` (or `Tab`) to open Universal Actions.
 3. Select **Decrypt with PGP**.
 
-GPG will ask for your passphrase via the pinentry dialog (handled automatically by gpg-agent — you won't see a terminal prompt). The decrypted file is saved next to the encrypted one with the encrypted extension stripped (e.g. `document.pdf.gpg` → `document.pdf`). If a file with that name already exists, a numeric suffix is added (e.g. `document.pdf.1`).
+GPG will ask for your passphrase via the pinentry dialog (handled automatically by gpg-agent — you won't see a terminal prompt). The decrypted file is saved next to the encrypted one with the encrypted extension stripped (e.g. `document.pdf.gpg` → `document.pdf`). If a file with that name already exists, you'll be asked whether to overwrite it.
 
 ---
 
@@ -118,27 +118,25 @@ GPG will ask for your passphrase via the pinentry dialog (handled automatically 
 ### Encrypt flow
 
 ```
-File Action "Encrypt with PGP"
+Universal Action "Encrypt with PGP"
     ↓  passes file path
 Script Filter (list_keys.js)
     ↓  queries gpg --list-keys, user picks a recipient
     ↓  file path is preserved via Alfred workflow variables
 Run Script (encrypt.sh)
     ↓  runs: gpg --encrypt --recipient <fingerprint> <file>
-Post Notification
-    "Encrypted: document.pdf.gpg"
+    ↓  osascript notification: "Encrypted: document.pdf.gpg"
 ```
 
 ### Decrypt flow
 
 ```
-File Action "Decrypt with PGP"
+Universal Action "Decrypt with PGP"
     ↓  passes file path
 Run Script (decrypt.sh)
     ↓  runs: gpg --decrypt --output <file> <file.gpg>
     ↓  gpg-agent handles passphrase via pinentry
-Post Notification
-    "Decrypted: document.pdf"
+    ↓  osascript notification: "Decrypted: document.pdf"
 ```
 
 ### Key picker (Script Filter)
