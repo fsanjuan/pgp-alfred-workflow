@@ -137,6 +137,52 @@ teardown() {
 }
 
 # ---------------------------------------------------------------------------
+# Overwrite prompt
+# ---------------------------------------------------------------------------
+
+@test "encrypts and overwrites when user confirms" {
+    export filepath="$TEST_FILE"
+    touch "${TEST_FILE}.gpg"  # pre-existing output
+
+    # Distinguish confirm dialog from notify: notify messages start with "Encrypted:"
+    osascript() {
+        if [[ "$1" == "-" ]]; then
+            local msg="$2"; cat > /dev/null
+            [[ "$msg" == Encrypted:* ]] && echo "$msg" || echo "Overwrite"
+        fi
+    }
+    export -f osascript
+
+    gpg() {
+        local args=("$@")
+        for i in "${!args[@]}"; do
+            if [[ "${args[$i]}" == "--output" ]]; then
+                touch "${args[$((i+1))]}"
+            fi
+        done
+        return 0
+    }
+    export -f gpg
+
+    run bash src/encrypt.sh "$VALID_FPR"
+    [ "$status" -eq 0 ]
+    [[ "$output" == "Encrypted: document.txt.gpg" ]]
+}
+
+@test "exits without encrypting when user cancels overwrite" {
+    export filepath="$TEST_FILE"
+    echo "old encrypted" > "${TEST_FILE}.gpg"
+
+    # Simulate user clicking Cancel
+    osascript() { cat > /dev/null; echo "Cancel"; }
+    export -f osascript
+
+    run bash src/encrypt.sh "$VALID_FPR"
+    [ "$status" -eq 0 ]
+    [[ "$(cat "${TEST_FILE}.gpg")" == "old encrypted" ]]
+}
+
+# ---------------------------------------------------------------------------
 # GPG failure
 # ---------------------------------------------------------------------------
 
