@@ -38,3 +38,5 @@ jobs:
         if: always()
         with:
           report_paths: reports/*.xml
+          detailed_summary: true
+          include_passed: true
