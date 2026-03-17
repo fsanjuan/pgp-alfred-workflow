@@ -18,7 +18,11 @@ An Alfred workflow to encrypt and decrypt files using PGP/GPG, directly from Alf
 
 ## Installation
 
-### 1. Build the workflow file
+### Download
+
+[Download the latest release](https://github.com/fsanjuan/pgp-alfred-workflow/releases/latest/download/alfred-pgp.alfredworkflow) and double-click the file — Alfred will prompt you to import it.
+
+### Build from source
 
 From the project directory, run:
 
@@ -26,17 +30,11 @@ From the project directory, run:
 bash build.sh
 ```
 
-This creates `alfred-pgp.alfredworkflow` in the same folder.
-
-### 2. Install into Alfred
-
-Double-click `alfred-pgp.alfredworkflow` in Finder, or run:
+This creates `alfred-pgp.alfredworkflow` in the same folder. Then double-click it or run:
 
 ```bash
 open alfred-pgp.alfredworkflow
 ```
-
-Alfred will prompt you to import the workflow. Click **Import**.
 
 ---
 
