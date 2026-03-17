@@ -79,6 +79,16 @@ gpg --keyserver keys.openpgp.org --search-keys "name or email"
 gpg --list-keys
 ```
 
+**Trust the key:**
+
+After importing, GPG won't encrypt to the key until you mark it as trusted:
+
+```bash
+gpg --edit-key <fingerprint>
+```
+
+Then type `trust`, choose `5` (ultimate trust), and `quit`. If you skip this step, the workflow will show an error dialog with this command when you try to encrypt.
+
 ### Set up your own key pair (for decryption)
 
 To decrypt files sent to you, you need a private key. If you don't have one yet:
