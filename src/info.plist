@@ -32,19 +32,7 @@
 				<true/>
 			</dict>
 		</array>
-		<key>A3B4C5D6-E7F8-9012-A3B4-C5D6E7F89012</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>B4C5D6E7-F8A9-0123-B4C5-D6E7F8A90123</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
+
 		<key>C5D6E7F8-A9B0-1234-C5D6-E7F8A9B01234</key>
 		<array>
 			<dict>
@@ -58,22 +46,10 @@
 				<true/>
 			</dict>
 		</array>
-		<key>D6E7F8A9-B0C1-2345-D6E7-F8A9B0C12345</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>E7F8A9B0-C1D2-3456-E7F8-A9B0C1D23456</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
+
 	</dict>
 	<key>createdby</key>
-	<string>Felix</string>
+	<string>Felix Sanjuan</string>
 	<key>description</key>
 	<string>Encrypt and decrypt files using PGP/GPG via Universal Actions.</string>
 	<key>name</key>
@@ -173,27 +149,7 @@
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<true/>
-				<key>removeextension</key>
-				<false/>
-				<key>subtitle</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>PGP Encryption</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>B4C5D6E7-F8A9-0123-B4C5-D6E7F8A90123</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
+
 		<dict>
 			<key>config</key>
 			<dict>
@@ -238,27 +194,7 @@
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<true/>
-				<key>removeextension</key>
-				<false/>
-				<key>subtitle</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>PGP Decryption</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>E7F8A9B0-C1D2-3456-E7F8-A9B0C1D23456</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
+
 	</array>
 	<key>readme</key>
 	<string>Encrypt and decrypt files using PGP/GPG.
@@ -296,13 +232,7 @@ Output files are placed next to the originals.
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
-		<key>B4C5D6E7-F8A9-0123-B4C5-D6E7F8A90123</key>
-		<dict>
-			<key>xpos</key>
-			<real>640</real>
-			<key>ypos</key>
-			<real>10</real>
-		</dict>
+
 		<key>C5D6E7F8-A9B0-1234-C5D6-E7F8A9B01234</key>
 		<dict>
 			<key>xpos</key>
@@ -317,13 +247,7 @@ Output files are placed next to the originals.
 			<key>ypos</key>
 			<real>160</real>
 		</dict>
-		<key>E7F8A9B0-C1D2-3456-E7F8-A9B0C1D23456</key>
-		<dict>
-			<key>xpos</key>
-			<real>430</real>
-			<key>ypos</key>
-			<real>160</real>
-		</dict>
+
 	</dict>
 	<key>version</key>
 	<string>1.0</string>
