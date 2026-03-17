@@ -28,7 +28,15 @@ jobs:
         run: npm test
 
       - name: Shell script tests
-        run: bats tests/encrypt.bats tests/decrypt.bats
+        run: bats tests/encrypt.bats tests/decrypt.bats --report-formatter junit --output reports/
 
       - name: Plist validation
         run: plutil -lint src/info.plist
+
+      - name: Publish test results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Test Results
+          path: reports/*.xml
+          reporter: java-junit

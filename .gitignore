@@ -6,6 +6,7 @@
 
 # Generated build artifacts
 src/icon.png
+reports/
 
 # macOS
 .DS_Store
