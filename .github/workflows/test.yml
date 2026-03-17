@@ -37,7 +37,9 @@ jobs:
         run: plutil -lint src/info.plist
 
       - name: Publish test results
-        uses: mikepenz/action-junit-report@v6
+        uses: dorny/test-reporter@v2
         if: always()
         with:
-          report_paths: reports/*.xml
+          name: Test Results
+          path: reports/*.xml
+          reporter: java-junit
