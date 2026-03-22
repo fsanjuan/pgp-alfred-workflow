@@ -46,8 +46,8 @@ open alfred-pgp.alfredworkflow
 # JS unit tests (parseKeys / buildItems logic)
 npm test
 
-# Shell script tests (encrypt.sh / decrypt.sh)
-bats tests/encrypt.bats tests/decrypt.bats
+# Shell script tests (encrypt.sh / decrypt.sh / decrypt_open.sh)
+bats tests/encrypt.bats tests/decrypt.bats tests/decrypt_open.bats
 
 # Plist validation (also runs automatically in build.sh)
 plutil -lint src/info.plist
@@ -165,7 +165,8 @@ The file path is threaded through the encrypt flow using Alfred's [workflow vari
 | `list_keys.js` | Script Filter: reads GPG keyring, outputs Alfred JSON (JXA) |
 | `keys.js` | Pure JS logic extracted from `list_keys.js` for unit testing |
 | `encrypt.sh` | Runs `gpg --encrypt` for the selected recipient |
-| `decrypt.sh` | Runs `gpg --decrypt` and handles output file naming |
+| `decrypt.sh` | Runs `gpg --decrypt` and saves the file next to the original |
+| `decrypt_open.sh` | Runs `gpg --decrypt` to a temp file, opens it, then deletes it |
 | `build.sh` | Packages the workflow into a `.alfredworkflow` file |
 
 ---
