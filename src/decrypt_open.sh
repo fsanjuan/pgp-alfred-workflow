@@ -47,9 +47,15 @@ else
 fi
 
 # Size the RAM disk: 2x the encrypted file size + 16MB overhead, minimum 32MB
+# Hard cap of 512MB — files larger than this should use "Decrypt and Save" instead
 file_size=$(stat -f%z "$input" 2>/dev/null || echo 0)
+max_bytes=$((512 * 1024 * 1024))
 min_bytes=$((32 * 1024 * 1024))
 needed_bytes=$((file_size * 2 + 16 * 1024 * 1024))
+if [[ $needed_bytes -gt $max_bytes ]]; then
+    error_dialog "This file is too large to decrypt and open in memory (max 512 MB). Use \"Decrypt and Save\" instead."
+    exit 0
+fi
 disk_bytes=$(( needed_bytes > min_bytes ? needed_bytes : min_bytes ))
 sectors=$((disk_bytes / 512))
 

@@ -78,6 +78,22 @@ mock_gpg_success() {
 }
 
 # ---------------------------------------------------------------------------
+# File size cap
+# ---------------------------------------------------------------------------
+
+@test "error when encrypted file exceeds 512MB cap" {
+    local encrypted="$TEST_DIR/huge.pdf.gpg"
+    # Create a file reported as 300MB — 2x + 16MB overhead = 616MB > 512MB cap
+    touch "$encrypted"
+    stat() { echo $((300 * 1024 * 1024)); }
+    export -f stat
+
+    run bash src/decrypt_open.sh "$encrypted"
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"too large"* ]]
+}
+
+# ---------------------------------------------------------------------------
 # RAM disk setup failures
 # ---------------------------------------------------------------------------
 
