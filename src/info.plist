@@ -261,10 +261,9 @@ Requirements:
 - At least one public key in your keyring for encryption
 
 Usage:
-- Encrypt: select any file in Alfred → Universal Actions → "Encrypt with PGP" → pick a recipient key
-- Decrypt: select a .gpg/.pgp/.asc file → Universal Actions → "Decrypt with PGP"
-
-Output files are placed next to the originals.
+- Encrypt: select any file → Universal Actions → "Encrypt with PGP" → pick a recipient key
+- Decrypt and Save: select a .gpg/.pgp/.asc file → Universal Actions → "Decrypt and Save"
+- Decrypt and Open: select a .gpg/.pgp/.asc file → Universal Actions → "Decrypt and Open" (decrypts to RAM, no plaintext on disk)
 	</string>
 	<key>uidata</key>
 	<dict>

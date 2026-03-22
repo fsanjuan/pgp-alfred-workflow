@@ -117,9 +117,11 @@ The encrypted file is saved next to the original with a `.gpg` extension (e.g. `
 
 1. Navigate to the encrypted file (`.gpg`, `.pgp`, or `.asc`) in Alfred.
 2. Press `→` (or `Tab`) to open Universal Actions.
-3. Select **Decrypt with PGP**.
+3. Choose how you want to decrypt:
+   - **Decrypt and Save** — saves the decrypted file next to the original with the encrypted extension stripped (e.g. `document.pdf.gpg` → `document.pdf`). If a file with that name already exists, you'll be asked whether to overwrite it.
+   - **Decrypt and Open** — decrypts into a temporary RAM disk and opens the file immediately with the default app (e.g. Preview for PDFs). No plaintext is written to disk. The RAM disk is ejected automatically when you close the file. Files larger than 512 MB cannot be opened this way — use Decrypt and Save instead.
 
-GPG will ask for your passphrase via the pinentry dialog (handled automatically by gpg-agent — you won't see a terminal prompt). The decrypted file is saved next to the encrypted one with the encrypted extension stripped (e.g. `document.pdf.gpg` → `document.pdf`). If a file with that name already exists, you'll be asked whether to overwrite it.
+GPG will ask for your passphrase via the pinentry dialog (handled automatically by gpg-agent — you won't see a terminal prompt).
 
 ---
 
@@ -138,15 +140,27 @@ Run Script (encrypt.sh)
     ↓  osascript notification: "Encrypted: document.pdf.gpg"
 ```
 
-### Decrypt flow
+### Decrypt and Save flow
 
 ```
-Universal Action "Decrypt with PGP"
+Universal Action "Decrypt and Save"
     ↓  passes file path
 Run Script (decrypt.sh)
     ↓  runs: gpg --decrypt --output <file> <file.gpg>
     ↓  gpg-agent handles passphrase via pinentry
     ↓  osascript notification: "Decrypted: document.pdf"
+```
+
+### Decrypt and Open flow
+
+```
+Universal Action "Decrypt and Open"
+    ↓  passes file path
+Run Script (decrypt_open.sh)
+    ↓  creates a RAM disk (plaintext never touches SSD)
+    ↓  runs: gpg --decrypt --output /Volumes/alfred-pgp-<pid>/<file>
+    ↓  opens file with default app
+    ↓  ejects RAM disk when user closes the file
 ```
 
 ### Key picker (Script Filter)
