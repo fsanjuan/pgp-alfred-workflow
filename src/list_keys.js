@@ -88,13 +88,18 @@ function run(argv) {
                 ? { title: 'No public keys in keyring', subtitle: 'Import a key: gpg --import key.asc', valid: false }
                 : { title: 'No keys matching "' + searchTerm + '"', subtitle: 'Try a different name or email', valid: false }
         );
+    } else if (!searchTerm && filepath) {
+        const filename = ObjC.unwrap(ObjC.wrap(filepath).lastPathComponent);
+        items.unshift({
+            title: 'Select a key to encrypt with',
+            subtitle: 'File: ' + filename,
+            valid: false,
+        });
     }
 
     return JSON.stringify({ variables: { filepath: filepath }, items: items });
 }
 
-// NOTE: parseKeys() and buildItems() are duplicated in src/keys.js (a plain Node
-// module) so they can be unit-tested with Jest. Keep the two copies in sync.
 function parseKeys(lines) {
     const keys = [];
     let currentKeyId = null;

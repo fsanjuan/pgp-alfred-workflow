@@ -155,8 +155,8 @@ uid:u::::1609459200::H1::Alice Example <alice@example.com>:::::::::0:
 uid:u::::1609459200::H1B::Alice Alt <alice.alt@example.com>:::::::::0:"
     run osascript -l JavaScript src/list_keys.js "$ENCRYPTED_FILE"
     [ "$status" -eq 0 ]
-    # Count occurrences of the fingerprint — should appear only once as arg
-    count=$(echo "$output" | grep -o "AAAA1111AAAA1111AAAA1111AAAA1111AAAA1111" | wc -l | tr -d ' ')
+    # Count occurrences of the fingerprint as an arg value — should be exactly one item
+    count=$(echo "$output" | grep -o '"arg":"AAAA1111AAAA1111AAAA1111AAAA1111AAAA1111"' | wc -l | tr -d ' ')
     [ "$count" -eq 1 ]
 }
 
