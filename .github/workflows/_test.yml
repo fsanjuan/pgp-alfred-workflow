@@ -17,7 +17,7 @@ jobs:
         run: brew install bats-core
 
       - name: Shell script tests
-        run: bats tests/encrypt.bats tests/decrypt.bats tests/decrypt_open.bats tests/list_keys.bats --report-formatter junit --output reports/
+        run: mkdir -p reports && bats tests/encrypt.bats tests/decrypt.bats tests/decrypt_open.bats tests/list_keys.bats --report-formatter junit --output reports/
 
       - name: Plist validation
         run: plutil -lint src/info.plist
