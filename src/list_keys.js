@@ -40,7 +40,7 @@ function run(argv) {
     try {
         rawOutput = app.doShellScript(
             'export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"; ' +
-            'gpg --list-keys --with-colons 2>/dev/null'
+            '${ALFRED_PGP_GPG:-gpg} --list-keys --with-colons 2>/dev/null'
         );
     } catch (e) {
         return JSON.stringify({

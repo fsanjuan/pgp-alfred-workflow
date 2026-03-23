@@ -40,14 +40,11 @@ open alfred-pgp.alfredworkflow
 
 ## Running the tests
 
-**Requirements:** `node` and `bats-core` — install with `brew install node bats-core`, then `npm install` once.
+**Requirements:** `bats-core` — install with `brew install bats-core`.
 
 ```bash
-# JS unit tests (parseKeys / buildItems logic)
-npm test
-
-# Shell script tests (encrypt.sh / decrypt.sh / decrypt_open.sh)
-bats tests/encrypt.bats tests/decrypt.bats tests/decrypt_open.bats
+# All tests (encrypt, decrypt, decrypt_open, key listing)
+bats tests/encrypt.bats tests/decrypt.bats tests/decrypt_open.bats tests/list_keys.bats
 
 # Plist validation (also runs automatically in build.sh)
 plutil -lint src/info.plist
@@ -177,7 +174,6 @@ The file path is threaded through the encrypt flow using Alfred's [workflow vari
 |------|---------|
 | `info.plist` | Alfred workflow definition (nodes, connections, layout) |
 | `list_keys.js` | Script Filter: reads GPG keyring, outputs Alfred JSON (JXA) |
-| `keys.js` | Pure JS logic extracted from `list_keys.js` for unit testing |
 | `encrypt.sh` | Runs `gpg --encrypt` for the selected recipient |
 | `decrypt.sh` | Runs `gpg --decrypt` and saves the file next to the original |
 | `decrypt_open.sh` | Runs `gpg --decrypt` to a temp file, opens it, then deletes it |
