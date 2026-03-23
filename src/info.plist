@@ -46,6 +46,19 @@
 				<true/>
 			</dict>
 		</array>
+		<key>8DD98E73-1D19-4A3A-A1B6-719A67611B01</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1D6C6446-84D9-4A48-A4D7-BD9CA54D9FFE</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<true/>
+			</dict>
+		</array>
 
 	</dict>
 	<key>createdby</key>
@@ -162,7 +175,7 @@
 				<key>acceptsurls</key>
 				<false/>
 				<key>name</key>
-				<string>Decrypt with PGP</string>
+				<string>Decrypt and Save</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.trigger.universalaction</string>
@@ -194,6 +207,50 @@
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsfiles</key>
+				<true/>
+				<key>acceptsmulti</key>
+				<false/>
+				<key>acceptstext</key>
+				<false/>
+				<key>acceptsurls</key>
+				<false/>
+				<key>name</key>
+				<string>Decrypt and Open</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.universalaction</string>
+			<key>uid</key>
+			<string>8DD98E73-1D19-4A3A-A1B6-719A67611B01</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/bin/bash decrypt_open.sh "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>1D6C6446-84D9-4A48-A4D7-BD9CA54D9FFE</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 
 	</array>
 	<key>readme</key>
@@ -204,10 +261,9 @@ Requirements:
 - At least one public key in your keyring for encryption
 
 Usage:
-- Encrypt: select any file in Alfred → Universal Actions → "Encrypt with PGP" → pick a recipient key
-- Decrypt: select a .gpg/.pgp/.asc file → Universal Actions → "Decrypt with PGP"
-
-Output files are placed next to the originals.
+- Encrypt: select any file → Universal Actions → "Encrypt with PGP" → pick a recipient key
+- Decrypt and Save: select a .gpg/.pgp/.asc file → Universal Actions → "Decrypt and Save"
+- Decrypt and Open: select a .gpg/.pgp/.asc file → Universal Actions → "Decrypt and Open" (decrypts to RAM, no plaintext on disk)
 	</string>
 	<key>uidata</key>
 	<dict>
@@ -246,6 +302,20 @@ Output files are placed next to the originals.
 			<real>220</real>
 			<key>ypos</key>
 			<real>160</real>
+		</dict>
+		<key>8DD98E73-1D19-4A3A-A1B6-719A67611B01</key>
+		<dict>
+			<key>xpos</key>
+			<real>10</real>
+			<key>ypos</key>
+			<real>310</real>
+		</dict>
+		<key>1D6C6446-84D9-4A48-A4D7-BD9CA54D9FFE</key>
+		<dict>
+			<key>xpos</key>
+			<real>220</real>
+			<key>ypos</key>
+			<real>310</real>
 		</dict>
 
 	</dict>

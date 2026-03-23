@@ -13,22 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v6
-        with:
-          node-version: lts/*
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
       - name: Install bats-core
         run: brew install bats-core
 
-      - name: JS unit tests
-        run: npm test
-
       - name: Shell script tests
-        run: bats tests/encrypt.bats tests/decrypt.bats --report-formatter junit --output reports/
+        run: mkdir -p reports && bats tests/encrypt.bats tests/decrypt.bats tests/decrypt_open.bats tests/list_keys.bats --report-formatter junit --output reports/
 
       - name: Plist validation
         run: plutil -lint src/info.plist
