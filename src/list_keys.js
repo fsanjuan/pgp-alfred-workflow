@@ -69,8 +69,13 @@ function run(argv) {
             continue;
         }
 
-        const title = key.name || key.email || key.keyId;
-        const subtitle = key.email || ('Key ID: ' + key.keyId);
+        const title = key.name
+            ? (key.email ? key.name + ' <' + key.email + '>' : key.name)
+            : (key.email || key.keyId);
+        const filename = filepath ? ObjC.unwrap(ObjC.wrap(filepath).lastPathComponent) : '';
+        const subtitle = filename
+            ? '🔑 Encrypt ' + filename + ' with this key'
+            : (key.email || ('Key ID: ' + key.keyId));
 
         items.push({
             uid: key.fingerprint,
