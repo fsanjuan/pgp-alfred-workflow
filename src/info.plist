@@ -72,19 +72,15 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>acceptsfiles</key>
-				<true/>
 				<key>acceptsmulti</key>
-				<false/>
-				<key>acceptstext</key>
-				<false/>
-				<key>acceptsurls</key>
-				<false/>
+				<integer>0</integer>
+				<key>filetypes</key>
+				<array/>
 				<key>name</key>
 				<string>Encrypt with PGP</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.trigger.universalaction</string>
+			<string>alfred.workflow.trigger.action</string>
 			<key>uid</key>
 			<string>BF4A6361-0210-482C-8602-142A1AF204C9</string>
 			<key>version</key>
