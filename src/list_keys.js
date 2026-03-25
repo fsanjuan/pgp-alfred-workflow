@@ -88,13 +88,6 @@ function run(argv) {
                 ? { title: 'No public keys in keyring', subtitle: 'Import a key: gpg --import key.asc', valid: false }
                 : { title: 'No keys matching "' + searchTerm + '"', subtitle: 'Try a different name or email', valid: false }
         );
-    } else if (!searchTerm && filepath) {
-        const filename = ObjC.unwrap(ObjC.wrap(filepath).lastPathComponent);
-        items.unshift({
-            title: 'Select a key to encrypt with',
-            subtitle: 'File: ' + filename,
-            valid: false,
-        });
     }
 
     return JSON.stringify({ variables: { filepath: filepath }, items: items });

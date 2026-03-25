@@ -74,19 +74,6 @@ uid:u::::1609459200::H2::Bob Builder <bob@example.com>:::::::::0:"
     [[ "$output" == *"document.pdf.gpg"* ]]
 }
 
-@test "shows prompt item when filepath is set and no search term" {
-    mock_gpg "$TWO_KEYS"
-    run osascript -l JavaScript src/list_keys.js "$ENCRYPTED_FILE"
-    [ "$status" -eq 0 ]
-    [[ "$output" == *"Select a key to encrypt with"* ]]
-}
-
-@test "prompt shows filename" {
-    mock_gpg "$TWO_KEYS"
-    run osascript -l JavaScript src/list_keys.js "$ENCRYPTED_FILE"
-    [ "$status" -eq 0 ]
-    [[ "$output" == *"document.pdf.gpg"* ]]
-}
 
 # ---------------------------------------------------------------------------
 # Filtering
