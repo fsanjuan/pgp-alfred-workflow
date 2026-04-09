@@ -67,7 +67,7 @@ if [[ ! "$recipient" =~ ^[0-9A-Fa-f]{40}$ ]]; then
     exit 0
 fi
 
-output="${input}.gpg"
+output="${input}.${output_extension:-gpg}"
 
 # If output already exists, ask the user before overwriting
 if [[ -f "$output" ]]; then

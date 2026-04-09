@@ -315,6 +315,35 @@ Usage:
 		</dict>
 
 	</dict>
+	<key>userconfigurationconfig</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>gpg</string>
+				<key>pairs</key>
+				<array>
+					<array>
+						<string>.gpg (default)</string>
+						<string>gpg</string>
+					</array>
+					<array>
+						<string>.pgp</string>
+						<string>pgp</string>
+					</array>
+				</array>
+			</dict>
+			<key>description</key>
+			<string>File extension for encrypted output files.</string>
+			<key>label</key>
+			<string>Output Extension</string>
+			<key>type</key>
+			<string>popupbutton</string>
+			<key>variable</key>
+			<string>output_extension</string>
+		</dict>
+	</array>
 	<key>version</key>
 	<string>1.0</string>
 	<key>webaddress</key>
