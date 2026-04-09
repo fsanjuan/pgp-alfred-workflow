@@ -94,7 +94,7 @@ teardown() {
     [[ "$output" == "Encrypted: document.txt.gpg" ]]
 }
 
-@test "output file is named <input>.gpg" {
+@test "output file is named <input>.gpg by default" {
     export filepath="$TEST_FILE"
 
     gpg() {
@@ -110,6 +110,27 @@ teardown() {
 
     run bash src/encrypt.sh "$VALID_FPR"
     [ -f "${TEST_FILE}.gpg" ]
+}
+
+@test "output file uses .pgp extension when output_extension is set to pgp" {
+    export filepath="$TEST_FILE"
+    export output_extension="pgp"
+
+    gpg() {
+        local args=("$@")
+        for i in "${!args[@]}"; do
+            if [[ "${args[$i]}" == "--output" ]]; then
+                touch "${args[$((i+1))]}"
+            fi
+        done
+        return 0
+    }
+    export -f gpg
+
+    run bash src/encrypt.sh "$VALID_FPR"
+    [ "$status" -eq 0 ]
+    [ -f "${TEST_FILE}.pgp" ]
+    [[ "$output" == "Encrypted: document.txt.pgp" ]]
 }
 
 @test "gpg receives --recipient and --encrypt flags" {
