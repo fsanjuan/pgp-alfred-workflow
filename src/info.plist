@@ -72,19 +72,15 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>acceptsfiles</key>
-				<true/>
 				<key>acceptsmulti</key>
-				<false/>
-				<key>acceptstext</key>
-				<false/>
-				<key>acceptsurls</key>
-				<false/>
+				<integer>0</integer>
+				<key>filetypes</key>
+				<array/>
 				<key>name</key>
 				<string>Encrypt with PGP</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.trigger.universalaction</string>
+			<string>alfred.workflow.trigger.action</string>
 			<key>uid</key>
 			<string>BF4A6361-0210-482C-8602-142A1AF204C9</string>
 			<key>version</key>
@@ -166,19 +162,19 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>acceptsfiles</key>
-				<true/>
 				<key>acceptsmulti</key>
-				<false/>
-				<key>acceptstext</key>
-				<false/>
-				<key>acceptsurls</key>
-				<false/>
+				<integer>0</integer>
+				<key>filetypes</key>
+				<array>
+					<string>dyn.ah62d4rv4ge80s6dh</string>
+					<string>dyn.ah62d4rv4ge81a35u</string>
+					<string>dyn.ah62d4rv4ge80c65d</string>
+				</array>
 				<key>name</key>
 				<string>Decrypt and Save</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.trigger.universalaction</string>
+			<string>alfred.workflow.trigger.action</string>
 			<key>uid</key>
 			<string>9FA4F317-2582-4930-9634-28F94A2C9743</string>
 			<key>version</key>
@@ -210,19 +206,19 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>acceptsfiles</key>
-				<true/>
 				<key>acceptsmulti</key>
-				<false/>
-				<key>acceptstext</key>
-				<false/>
-				<key>acceptsurls</key>
-				<false/>
+				<integer>0</integer>
+				<key>filetypes</key>
+				<array>
+					<string>dyn.ah62d4rv4ge80s6dh</string>
+					<string>dyn.ah62d4rv4ge81a35u</string>
+					<string>dyn.ah62d4rv4ge80c65d</string>
+				</array>
 				<key>name</key>
 				<string>Decrypt and Open</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.trigger.universalaction</string>
+			<string>alfred.workflow.trigger.action</string>
 			<key>uid</key>
 			<string>8DD98E73-1D19-4A3A-A1B6-719A67611B01</string>
 			<key>version</key>

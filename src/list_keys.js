@@ -69,8 +69,13 @@ function run(argv) {
             continue;
         }
 
-        const title = key.name || key.email || key.keyId;
-        const subtitle = key.email || ('Key ID: ' + key.keyId);
+        const title = key.name
+            ? (key.email ? key.name + ' <' + key.email + '>' : key.name)
+            : (key.email || key.keyId);
+        const filename = filepath ? ObjC.unwrap(ObjC.wrap(filepath).lastPathComponent) : '';
+        const subtitle = filename
+            ? '🔑 Encrypt ' + filename + ' with this key'
+            : (key.email || ('Key ID: ' + key.keyId));
 
         items.push({
             uid: key.fingerprint,
@@ -88,13 +93,6 @@ function run(argv) {
                 ? { title: 'No public keys in keyring', subtitle: 'Import a key: gpg --import key.asc', valid: false }
                 : { title: 'No keys matching "' + searchTerm + '"', subtitle: 'Try a different name or email', valid: false }
         );
-    } else if (!searchTerm && filepath) {
-        const filename = ObjC.unwrap(ObjC.wrap(filepath).lastPathComponent);
-        items.unshift({
-            title: 'Select a key to encrypt with',
-            subtitle: 'File: ' + filename,
-            valid: false,
-        });
     }
 
     return JSON.stringify({ variables: { filepath: filepath }, items: items });
