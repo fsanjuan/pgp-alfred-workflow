@@ -14,13 +14,6 @@ export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
 
 debug() { [[ -f "${HOME}/.config/alfred-pgp/debug" ]] && echo "$*" >> "${HOME}/.config/alfred-pgp/debug.log"; }
 
-notify() {
-    osascript - "$1" <<'EOF'
-on run argv
-    display notification (item 1 of argv) with title "PGP Encrypt/Decrypt"
-end run
-EOF
-}
 
 error_dialog() {
     osascript - "$1" <<'EOF'
@@ -86,7 +79,7 @@ if gpg --batch --yes \
        "$input" 2>"$error_log"; then
     rm -f "$error_log"
     debug "gpg succeeded"
-    notify "Encrypted: $(basename "$output")"
+    echo "Encrypted: $(basename "$output")"
 else
     error=$(cat "$error_log")
     rm -f "$error_log"

@@ -59,6 +59,32 @@
 				<true/>
 			</dict>
 		</array>
+		<key>B2F05990-4743-427B-AC0D-CFE8273A49B4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1CA26236-67F0-430C-B8F8-1DBAF9B489D5</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<true/>
+			</dict>
+		</array>
+		<key>4F30ECBA-4CA0-4CC5-A83C-05764A58D2E8</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1CA26236-67F0-430C-B8F8-1DBAF9B489D5</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<true/>
+			</dict>
+		</array>
 
 	</dict>
 	<key>createdby</key>
@@ -98,7 +124,7 @@
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
-				<integer>1</integer>
+				<integer>2</integer>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
@@ -248,6 +274,28 @@
 			<integer>2</integer>
 		</dict>
 
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>title</key>
+				<string>PGP Encrypt/Decrypt</string>
+				<key>text</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>1CA26236-67F0-430C-B8F8-1DBAF9B489D5</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+
 	</array>
 	<key>readme</key>
 	<string>Encrypt and decrypt files using PGP/GPG.
@@ -312,6 +360,13 @@ Usage:
 			<real>220</real>
 			<key>ypos</key>
 			<real>310</real>
+		</dict>
+		<key>1CA26236-67F0-430C-B8F8-1DBAF9B489D5</key>
+		<dict>
+			<key>xpos</key>
+			<real>430</real>
+			<key>ypos</key>
+			<real>160</real>
 		</dict>
 
 	</dict>
