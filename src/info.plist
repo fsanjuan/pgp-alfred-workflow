@@ -23,13 +23,26 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
+				<string>58BE7983-588E-461C-9F1C-43D5947CF508</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>58BE7983-588E-461C-9F1C-43D5947CF508</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
 				<string>B2F05990-4743-427B-AC0D-CFE8273A49B4</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
 				<key>vitoclose</key>
-				<true/>
+				<false/>
 			</dict>
 		</array>
 
@@ -51,6 +64,32 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>1D6C6446-84D9-4A48-A4D7-BD9CA54D9FFE</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<true/>
+			</dict>
+		</array>
+		<key>B2F05990-4743-427B-AC0D-CFE8273A49B4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1CA26236-67F0-430C-B8F8-1DBAF9B489D5</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<true/>
+			</dict>
+		</array>
+		<key>4F30ECBA-4CA0-4CC5-A83C-05764A58D2E8</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1CA26236-67F0-430C-B8F8-1DBAF9B489D5</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -98,7 +137,7 @@
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
-				<integer>1</integer>
+				<integer>2</integer>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
@@ -132,6 +171,19 @@
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>0FF3AAEA-13A8-469C-A573-D631D514B69C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>unstackview</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.hidealfred</string>
+			<key>uid</key>
+			<string>58BE7983-588E-461C-9F1C-43D5947CF508</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -248,6 +300,28 @@
 			<integer>2</integer>
 		</dict>
 
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>title</key>
+				<string>PGP Encrypt/Decrypt</string>
+				<key>text</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>1CA26236-67F0-430C-B8F8-1DBAF9B489D5</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+
 	</array>
 	<key>readme</key>
 	<string>Encrypt and decrypt files using PGP/GPG.
@@ -277,10 +351,17 @@ Usage:
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
-		<key>B2F05990-4743-427B-AC0D-CFE8273A49B4</key>
+		<key>58BE7983-588E-461C-9F1C-43D5947CF508</key>
 		<dict>
 			<key>xpos</key>
 			<real>430</real>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>B2F05990-4743-427B-AC0D-CFE8273A49B4</key>
+		<dict>
+			<key>xpos</key>
+			<real>640</real>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
@@ -313,8 +394,44 @@ Usage:
 			<key>ypos</key>
 			<real>310</real>
 		</dict>
+		<key>1CA26236-67F0-430C-B8F8-1DBAF9B489D5</key>
+		<dict>
+			<key>xpos</key>
+			<real>430</real>
+			<key>ypos</key>
+			<real>160</real>
+		</dict>
 
 	</dict>
+	<key>userconfigurationconfig</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>gpg</string>
+				<key>pairs</key>
+				<array>
+					<array>
+						<string>.gpg (default)</string>
+						<string>gpg</string>
+					</array>
+					<array>
+						<string>.pgp</string>
+						<string>pgp</string>
+					</array>
+				</array>
+			</dict>
+			<key>description</key>
+			<string>File extension for encrypted output files.</string>
+			<key>label</key>
+			<string>Output Extension</string>
+			<key>type</key>
+			<string>popupbutton</string>
+			<key>variable</key>
+			<string>output_extension</string>
+		</dict>
+	</array>
 	<key>version</key>
 	<string>1.0</string>
 	<key>webaddress</key>
